@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:healthapp/Bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:healthapp/Bloc/main_bloc/main_bloc.dart';
 import 'package:healthapp/Core/Constants/app_assets.dart';
 import 'package:healthapp/Core/Constants/app_colors.dart';
@@ -72,63 +71,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               ),
               backgroundColor: AppColors.primaryColor,
               key: scaffoldKey,
-              body: BlocListener<ConnectivityBloc, ConnectedState>(
-                  listener: (context, state) {
-                    if (state.message == "Connecting To Wifi") {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.green,
-                        duration: const Duration(seconds: 5),
-                        content: Text(
-                          state.message,
-                        ),
-                      ));
-                    }
-                    if (state.message == "Connecting To Mobile Data") {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.green,
-                        duration: const Duration(seconds: 5),
-                        content: Text(
-                          state.message,
-                        ),
-                      ));
-                    }
-                    if (state.message == "Lost Internet Connection") {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 5),
-                        content: Text(
-                          state.message,
-                        ),
-                      ));
-                    }
-                  },
-                  child:
-
-                      screenSelected()[context.read<MainBloc>().currentIndex],
-
-                      // screenSelected(context.read<MainBloc>().currentIndex)
-
-                  //     IndexedStack(
-                  //   index: context.read<MainBloc>().currentIndex,
-                  //   children: navigatorKeys.map((key) {
-                  //     int index = navigatorKeys.indexOf(key);
-                  //     return Offstage(
-                  //       offstage:
-                  //           context.read<MainBloc>().currentIndex != index,
-                  //       child: Navigator(
-                  //         key: key,
-                  //         onGenerateRoute: (routeSettings) {
-                  //           return MaterialPageRoute(
-                  //             builder: (context) => screens[index],
-                  //           );
-                  //         },
-                  //       ),
-                  //     );
-                  //   }).toList(),
-                  // )
-                  
-                  
-                  ),
+              body: screenSelected()[context.read<MainBloc>().currentIndex],
               bottomNavigationBar: ClipRRect(
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(8.w),
