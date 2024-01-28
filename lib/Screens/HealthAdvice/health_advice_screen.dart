@@ -9,7 +9,7 @@ class HealthAdviceScreen extends StatelessWidget {
     return ListView.builder(
       physics:
           const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      itemCount: 15,
+      itemCount: 1,
       itemBuilder: (context, index) {
         return HealthAdviceCardWidget();
       },

@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-           const  ProfileCardWidget(),
+            const ProfileCardWidget(),
             CardItemButton(
                 title: "Edit profile",
                 onPressed: () {
@@ -42,6 +42,7 @@ class ProfileScreen extends StatelessWidget {
                 title: "Log out",
                 onPressed: () async {
                   await AppSharedPreferences.removeToken();
+                  await AppSharedPreferences.removeUserId();
 
                   navigatorKey.currentState!.pushAndRemoveUntil(
                       MaterialPageRoute(

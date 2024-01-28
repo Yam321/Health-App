@@ -8,6 +8,7 @@ import 'package:healthapp/Screens/Home/home_screen.dart';
 import 'package:healthapp/Screens/Main/Widgets/app_bar_widget.dart';
 import 'package:healthapp/Screens/Main/Widgets/bottom_navigationbar_item.dart';
 import 'package:healthapp/Screens/Profile/profile_screen.dart';
+import 'package:healthapp/Screens/chat/chat_bot_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,12 +25,14 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
+      GlobalKey<NavigatorState>(),
   ];
 
   final List<Widget> screens = [
     HomeScreen(),
     HealthAdviceScreen(),
-    ProfileScreen()
+    ProfileScreen(),
+    ChatBotScreen()
   ];
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -115,6 +118,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                         index: 2,
                         icon: AppAssets.personIcon,
                         navBarName: "Profile"),
+
+                               bottomNavigationBarItem(context,
+                        currentIndex: context.read<MainBloc>().currentIndex,
+                        index: 3,
+                        icon: AppAssets.supportIcon,
+                        navBarName: "Chat Bot"),
                   ],
                 ),
               ));

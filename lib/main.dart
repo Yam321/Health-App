@@ -9,6 +9,7 @@ void main() async {
   // await DioApiService.init();
 
   debugPrint("token is ${AppSharedPreferences.getToken}");
+  debugPrint("user id is ${AppSharedPreferences.getUserId}");
 
   runApp(const MyApp());
 }

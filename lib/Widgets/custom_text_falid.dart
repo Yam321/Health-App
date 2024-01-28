@@ -16,18 +16,19 @@ class CustomTextField extends StatefulWidget {
   final String? validatorMessage;
   final Color? fillColor;
   final TextCapitalization capitalization;
-  final bool isAmount;
   final bool amountIcon;
   final bool? isDense;
+  final bool enabled;
 
   final bool isDescription;
   final bool isPassword;
   final Function(String text)? onChanged;
-  final String? prefixIconImage;
+  final Widget? prefixIcon;
   final bool? isPos;
 
   final bool variant;
   final Color? iconColor;
+  final Color borderColor;
 
   const CustomTextField({
     super.key,
@@ -37,6 +38,7 @@ class CustomTextField extends StatefulWidget {
     required this.textInputType,
     this.maxLine,
     this.focusNode,
+    this.enabled = true,
     this.iconColor,
     this.nextNode,
     this.textInputAction,
@@ -45,12 +47,12 @@ class CustomTextField extends StatefulWidget {
     this.validatorMessage,
     this.capitalization = TextCapitalization.none,
     this.fillColor,
-    this.isAmount = false,
     this.amountIcon = false,
     this.isDescription = false,
     this.onChanged,
-    this.prefixIconImage,
+    this.prefixIcon,
     this.isPassword = false,
+    this.borderColor = AppColors.primaryColor,
     this.isPos = false,
     this.variant = false,
   });
@@ -70,24 +72,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(context) {
     return TextFormField(
+      enabled: widget.enabled,
       cursorColor: AppColors.primaryColor,
-      style: const TextStyle(color: AppColors.primaryColor),
+      style:  TextStyle(color: AppColors.primaryColor,fontSize: 13.sp),
       controller: widget.controller,
       maxLines: widget.maxLine ?? 1,
       textCapitalization: widget.capitalization,
       focusNode: widget.focusNode,
       obscureText: widget.isPassword ? _obscureText : false,
       onChanged: widget.onChanged,
-      inputFormatters: (widget.textInputType == TextInputType.phone ||
-              widget.isPhoneNumber)
-          ? <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
-            ]
-          : widget.isAmount
-              ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
+      inputFormatters:
+          (widget.textInputType == TextInputType.phone || widget.isPhoneNumber)
+              ? <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
+                ]
               : null,
-      keyboardType:
-          widget.isAmount ? TextInputType.number : widget.textInputType,
+      //  [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+
+      keyboardType: widget.textInputType,
       textInputAction: widget.textInputAction ?? TextInputAction.next,
       onFieldSubmitted: (v) {
         FocusScope.of(context).requestFocus(widget.nextNode);
@@ -105,23 +107,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           minWidth: widget.variant ? 5 : 20,
           minHeight: widget.variant ? 5 : 20,
         ),
-        prefixIcon: widget.prefixIconImage != null
-            ? Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
-                    // decoration: BoxDecoration(
-                    //     color:
-                    //         AppColors.getPrimarySeconedary().withOpacity(.135)),
-                    child: Image.asset(
-                      widget.prefixIconImage!,
-                      color: widget.iconColor,
-                      width: 20,
-                      height: 20,
-                    )),
-              )
-            : const SizedBox(),
+        prefixIcon: widget.prefixIcon ,
         suffixIconConstraints: BoxConstraints(
           minWidth: widget.variant
               ? 5
@@ -140,31 +126,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
             : const SizedBox.shrink(),
         hintText: widget.hintText ?? '',
         enabledBorder: OutlineInputBorder(
-          borderSide:
-              const BorderSide(color: AppColors.textFieldColor, width: 1),
-          borderRadius: BorderRadius.circular(5.w),
+          borderSide: BorderSide(color: widget.borderColor, width: 1),
+          borderRadius: BorderRadius.circular(2.w),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide:
-              const BorderSide(color: AppColors.textFieldColor, width: 1),
-          borderRadius: BorderRadius.circular(5.w),
+          borderSide: BorderSide(color: widget.borderColor, width: 1),
+          borderRadius: BorderRadius.circular(2.w),
         ),
         errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.w),
+            borderRadius: BorderRadius.circular(2.w),
             borderSide: const BorderSide(color: Colors.red)),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.w),
-            borderSide:
-                const BorderSide(color: AppColors.textFieldColor, width: 1)),
+            borderRadius: BorderRadius.circular(2.w),
+            borderSide: BorderSide(color: widget.borderColor, width: 1)),
+            disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(2.w),
+            borderSide: BorderSide(color: widget.borderColor, width: 1)) ,
+            
         filled: widget.fillColor != null,
         fillColor: widget.fillColor,
         isDense: widget.isDense,
         contentPadding: EdgeInsets.symmetric(
-            vertical: 10.0, horizontal: widget.variant ? 0 : 10),
+            vertical: 1.h, horizontal: widget.variant ? 0 : 2.h),
         alignLabelWithHint: true,
         counterText: '',
-        hintStyle: TextStyle(color: AppColors.blueColor.withOpacity(0.5)),
-        errorStyle: TextStyle(height: 1.5),
+        hintStyle: TextStyle(color: AppColors.blueColor, fontSize: 12.sp),
+        errorStyle: const TextStyle(height: 1.5),
       ),
     );
   }

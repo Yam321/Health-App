@@ -28,7 +28,7 @@ class HealthAdviceCardWidget extends StatelessWidget {
                         textColor: AppColors.blueColor),
                     Expanded(
                       child: CustomText(
-                          textData: "Adviser Name",
+                          textData: "Ahmad",
                           textAlign: TextAlign.start,
                           fontSize: 14.sp,
                           textColor: AppColors.blueLightColor),
@@ -36,14 +36,10 @@ class HealthAdviceCardWidget extends StatelessWidget {
                   ],
                 ),
                 const ExpandableText(
-                  text:
-                      "Advise Advise Advise Advise  Advise Advise Advise Advise Advise Advise Advise Advise AdviseAdvise vAdvisev  Advise Advise Advise Advise AdviseAdviseAdvise v vAdviseAdviseAdviseAdviseAdviseAdviseAdviseAdviseAdviseAdviseAdviseAdvise Advise Advise Advise",
+                  text: "Take care ",
                 )
               ],
-            )
-
-       
-            ));
+            )));
   }
 }
 
@@ -67,27 +63,38 @@ class _ExpandableTextState extends State<ExpandableText> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        CustomText(
-            textData: widget.text,
-            textAlign: TextAlign.start,
-            maxLines: isExpanded ? null : 3,
-            textOverflow:
-                isExpanded ? TextOverflow.clip : TextOverflow.ellipsis,
-            fontSize: 12.sp,
-            textColor: AppColors.blueLightColor),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              isExpanded = !isExpanded;
-            });
-          },
-          child: CustomText(
-            textData: isExpanded ? 'See Less' : 'See More',
-            underLine: true,
-            textColor: Colors.blue,
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: CustomText( 
+                  textData: widget.text,
+                  textAlign: TextAlign.start,
+                  maxLines: isExpanded ? null : 3,
+                  textOverflow: widget.text.length < 100
+                      ? isExpanded
+                          ? TextOverflow.clip
+                          : TextOverflow.ellipsis
+                      : null,
+                  fontSize: 12.sp,
+                  textColor: AppColors.blueLightColor),
+            ),
+          ],
         ),
+        widget.text.length > 100
+            ? GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isExpanded = !isExpanded;
+                  });
+                },
+                child: CustomText(
+                  textData: isExpanded ? 'See Less' : 'See More',
+                  underLine: true,
+                  textColor: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

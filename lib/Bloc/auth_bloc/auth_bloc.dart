@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStates> {
 
       if (apiResult.response != null && apiResult.response!.statusCode == 200) {
        AppSharedPreferences.saveToken(apiResult.response!.data['token']['access']);
+         AppSharedPreferences.saveUserId(apiResult.response!.data['User_id']);
         emit(AuthSuccesfulState());
       } else {
         emit(AuthErrorState(message: apiResult.error.toString()));
