@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:healthapp/Bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:healthapp/Bloc/health_bloc/health_bloc.dart';
 import 'package:healthapp/Core/Constants/app_colors.dart';
 import 'package:healthapp/Core/Dialogs/check_dialog.dart';
@@ -48,37 +49,37 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.seconedaryColor,
       body: MultiBlocListener(
         listeners: [
-          // BlocListener<ConnectivityBloc, ConnectedState>(
-          //   listener: (context, state) {
-          //     if (state.message == "Connecting To Wifi") {
-          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          //         backgroundColor: Colors.green,
-          //         duration: const Duration(seconds: 5),
-          //         content: Text(
-          //           state.message,
-          //         ),
-          //       ));
-          //     }
-          //     if (state.message == "Connecting To Mobile Data") {
-          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          //         backgroundColor: Colors.green,
-          //         duration: const Duration(seconds: 5),
-          //         content: Text(
-          //           state.message,
-          //         ),
-          //       ));
-          //     }
-          //     if (state.message == "Lost Internet Connection") {
-          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          //         backgroundColor: Colors.red,
-          //         duration: const Duration(seconds: 5),
-          //         content: Text(
-          //           state.message,
-          //         ),
-          //       ));
-          //     }
-          //   },
-          // ),
+          BlocListener<ConnectivityBloc, ConnectedState>(
+            listener: (context, state) {
+              if (state.message == "Connecting To Wifi") {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.green,
+                  duration: const Duration(seconds: 5),
+                  content: Text(
+                    state.message,
+                  ),
+                ));
+              }
+              if (state.message == "Connecting To Mobile Data") {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.green,
+                  duration: const Duration(seconds: 5),
+                  content: Text(
+                    state.message,
+                  ),
+                ));
+              }
+              if (state.message == "Lost Internet Connection") {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.red,
+                  duration: const Duration(seconds: 5),
+                  content: Text(
+                    state.message,
+                  ),
+                ));
+              }
+            },
+          ),
           BlocListener<HealthBloc, HealthState>(
             listener: (context, state) {
               if (state is HealthAuthorizeState) {
